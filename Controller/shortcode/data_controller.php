@@ -3,18 +3,19 @@
 
 global $wpdb, $table_prefix;
 $path = $_SERVER['DOCUMENT_ROOT'];
+
 if(!isset($wpdb))
 {
-	include_once $path . '/wp-config.php';
-	include_once $path . '/wp-load.php';
-	include_once $path . '/wp-includes/wp-db.php';
-	include_once $path . '/wp-includes/pluggable.php';
+	include_once $path . '/famouscali/wp-config.php';
+	include_once $path . '/famouscali/wp-load.php';
+	include_once $path . '/famouscali/wp-includes/wp-db.php';
+	include_once $path . '/famouscali/wp-includes/pluggable.php';
 }
 
 /**
 * 
 */
-class Class_wpdb
+class Api_Consult
 {
 	private $_wpdb;
 	private $_table_name; 

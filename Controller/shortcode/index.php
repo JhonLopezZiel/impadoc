@@ -16,8 +16,8 @@
     });
 
     function shortcodeCalculator( $atts , $content = null) {
-  
-        $data = new Class_wpdb();
+        
+        $data = new Api_Consult();
         $option = $data->ConsultarOption();
         $tipo_superficie = array();
         $tipo_acabado = array();
@@ -37,73 +37,113 @@
 <div class="cart-container container page-wrapper page-checkout">
     <div class="woocommerce">
         <div class="row pt-0 ">
-            <div class="large-12 col  ">
+            <div class="large-12 col">
                 <div id="customer_details">
                     <div class="clear">
                         <h4>CALCULADORA</h4>
-                         <div class="woocommerce-billing-fields">
+                        <div id="app" class="woocommerce-billing-fields">
                             <div class="woocommerce-billing-fields__field-wrapper">
-                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required" id="billing_country_field" data-priority="40">
-                                    <label for="billing_country" class="">
-                                        TIPO SUPERFICIE
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <span class="woocommerce-input-wrapper">
-                                        <select name="billing_country" id="billing_country" 
-                                            class="country_to_state country_select  select2-hidden-accessible" autocomplete="country" tabindex="-1" aria-hidden="true">
-                                            <option value="">SELECCIONE UNA OPCIÓN</option>
-                                            <?php 
-                                                foreach ($tipo_superficie as $key => $value) {
-                                                    echo "<option value='".strtoupper($value)."'>".strtoupper($value)."</option>";
-                                                }
-                                            ?>                                      
-                                        </select>
-                                    </span>
-                                </p>
-                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required" id="billing_country_field" data-priority="40">
-                                    <label for="billing_country" class="">
-                                        TIPO ACABADO
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <span class="woocommerce-input-wrapper">
-                                        <select name="billing_country" id="billing_country" 
-                                            class="country_to_state country_select  select2-hidden-accessible" autocomplete="country" tabindex="-1" aria-hidden="true">
-                                            <option value="">SELECCIONE UNA OPCIÓN</option>
-                                            <?php 
-                                                foreach ($tipo_acabado as $key => $value) {
-                                                    echo "<option value='".strtoupper($value)."'>".strtoupper($value)."</option>";
-                                                }
-                                            ?>                                      
-                                        </select>
-                                    </span>
-                                </p>
-                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required" id="billing_country_field" data-priority="40">
-                                    <label for="billing_country" class="">
-                                        ACTIVIDAD
-                                        <abbr class="required" title="required">*</abbr>
-                                    </label>
-                                    <span class="woocommerce-input-wrapper">
-                                        <select name="billing_country" id="billing_country" 
-                                            class="country_to_state country_select  select2-hidden-accessible" autocomplete="country" tabindex="-1" aria-hidden="true">
-                                            <option value="">SELECCIONE UNA OPCIÓN</option>
-                                            <?php 
-                                                foreach ($actividad as $key => $value) {
-                                                    echo "<option value='".strtoupper($value)."'>".strtoupper($value)."</option>";
-                                                }
-                                            ?>                                      
-                                        </select>
-                                    </span>
-                                </p>
-                                <p class="form-row form-row-wide" id="billing_company_field" 
-                                    data-priority="30">
-                                    <label for="billing_company" class="">
-                                        CANTIDAD DE METROS (m2)
-                                    </label>
-                                    <span class="woocommerce-input-wrapper">
-                                        <input type="text" class="input-text " placeholder="" value="" >
-                                    </span>
-                                </p>
+                                {{ $data }}
+                                <span v-for="e in errors">{{ e }}</span>
+                                <template v-if="step == 1">
+                                    <p class="form-row form-row-wide address-field update_totals_on_change validate-required" 
+                                        data-priority="40">
+                                        <label for="tipo_superficie">
+                                            TIPO SUPERFICIE
+                                            <abbr class="required" title="required">*</abbr>
+                                        </label>
+                                        <span class="woocommerce-input-wrapper">
+                                            <select v-model="form.tipo_superficie" 
+                                                class="country_to_state country_select  select2-hidden-accessible">
+                                                <option value="">SELECCIONE UNA OPCIÓN</option>
+                                                <?php 
+                                                    foreach ($tipo_superficie as $key => $value) {
+                                                        echo "<option value='".strtoupper($value)."'>".strtoupper($value)."</option>";
+                                                    }
+                                                ?>                                      
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="form-row form-row-wide address-field update_totals_on_change validate-required" 
+                                        data-priority="40">
+                                        <label for="tipo_acabado">
+                                            TIPO ACABADO
+                                            <abbr class="required" title="required">*</abbr>
+                                        </label>
+                                        <span class="woocommerce-input-wrapper">
+                                            <select v-model="form.tipo_acabado" 
+                                                class="country_to_state country_select  select2-hidden-accessible">
+                                                <option value="">SELECCIONE UNA OPCIÓN</option>
+                                                <?php 
+                                                    foreach ($tipo_acabado as $key => $value) {
+                                                        echo "<option value='".strtoupper($value)."'>".strtoupper($value)."</option>";
+                                                    }
+                                                ?>                                      
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="form-row form-row-wide address-field update_totals_on_change validate-required" 
+                                        data-priority="40">
+                                        <label for="actividad">
+                                            ACTIVIDAD
+                                            <abbr class="required" title="required">*</abbr>
+                                        </label>
+                                        <span class="woocommerce-input-wrapper">
+                                            <select v-model="form.actividad" 
+                                                class="country_to_state country_select  select2-hidden-accessible">
+                                                <option value="">SELECCIONE UNA OPCIÓN</option>
+                                                <?php 
+                                                    foreach ($actividad as $key => $value) {
+                                                        echo "<option value='".strtoupper($value)."'>".strtoupper($value)."</option>";
+                                                    }
+                                                ?>                                      
+                                            </select>
+                                        </span>
+                                    </p>
+                                </template>
+                                <template v-if="step == 2">
+                                    <p class="form-row form-row-wide" data-priority="30">
+                                        <label for="medida" class="">
+                                            UNIDAD DE METROS (m2)
+                                        </label>
+                                        <span class="woocommerce-input-wrapper">
+                                            <input type="text" class="input-text " v-model="form.medida" >
+                                        </span>
+                                    </p>
+                                </template>
+                                <template v-if="step == 3">
+                                    <p class="form-row form-row-wide address-field update_totals_on_change validate-required" 
+                                        data-priority="40">
+                                        <label for="materiales">
+                                            MATERIALES
+                                            <abbr class="required" title="required">*</abbr>
+                                        </label>
+                                        <span class="woocommerce-input-wrapper">
+                                            <select v-model="form.materiales" 
+                                                class="country_to_state country_select  select2-hidden-accessible" >
+                                                <option value="">SELECCIONE UNA OPCIÓN</option>
+                                                <option v-for="materialOption in materialsOptions" :value="materialOption">{{materialOption.name}}</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                </template>
                             </div>
+                            <div id="payment" class="woocommerce-checkout-payment">
+                                <div class="form-row place-order">
+                                    <button @click.prevent="prevStep" v-if="step != 1" type="submit"
+                                        class="button-continue-shopping button primary is-outline">     
+                                        Atras
+                                    </button>
+                                    <button @click.prevent="nextStep" v-if="step != totalSteps && step < totalSteps" type="submit"
+                                        class="button primary wc-backward" data-value="Place order">     
+                                        Siguiente
+                                    </button>
+                                    <button @click.prevent="sendStep" v-if="step == 3" type="submit"
+                                        class="button primary wc-backward" data-value="Place order">     
+                                        Confirmar
+                                    </button>
+                                </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -111,7 +151,7 @@
         </div>
     </div>
 </div>
-        <?php
+<?php
     }
 
     add_shortcode ('CalculatorMaterialZiel', 'shortcodeCalculator');

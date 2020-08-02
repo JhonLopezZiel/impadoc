@@ -24,6 +24,8 @@ require plugin_dir_path( __FILE__ ) . 'Migration/index.php';
 require plugin_dir_path( __FILE__ ) . 'Controller/administrador/form.php';
 //Archivos administrador
 require plugin_dir_path( __FILE__ ) . 'Controller/shortcode/index.php';
+//Archivos API
+require plugin_dir_path( __FILE__ ) . 'Controller/api/data_api.php';
 
 
 
