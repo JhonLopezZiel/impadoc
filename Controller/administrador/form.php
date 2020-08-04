@@ -62,7 +62,8 @@ function calculator_form_page_handler()
         $item = shortcode_atts($default, $_REQUEST);     
         $item_valid = wpbc_validate_required($item);//Validacion de Datos        
         
-        if ($item_valid === true) {   
+        if ($item_valid === true) { 
+            $item['name_option'] = strtoupper($item['name_option']); 
             if ($item['id'] == 0) {
                 $result = $wpdb->insert($table_name, $item);
                 $item['id'] = $wpdb->insert_id;

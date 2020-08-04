@@ -36,3 +36,8 @@ function custom_admin_styles() {
 //Ejecucion de la funcion 
 add_action('admin_enqueue_scripts', 'custom_admin_styles');
 
+add_filter( 'upload_mimes', 'my_myme_types' , PHP_INT_MAX );
+function my_myme_types( $mime_types ) {
+    $mime_types['json'] = 'application/json';
+    return $mime_types;
+}

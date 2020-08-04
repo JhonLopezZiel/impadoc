@@ -2,6 +2,8 @@
 
 
 global $wpdb, $table_prefix;
+
+/*
 $path = $_SERVER['DOCUMENT_ROOT'];
 
 if(!isset($wpdb))
@@ -11,7 +13,7 @@ if(!isset($wpdb))
 	include_once $path . '/famouscali/wp-includes/wp-db.php';
 	include_once $path . '/famouscali/wp-includes/pluggable.php';
 }
-
+*/
 /**
 * 
 */
@@ -34,3 +36,14 @@ class Api_Consult
 		return $query;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+

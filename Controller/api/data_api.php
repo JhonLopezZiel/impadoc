@@ -1,36 +1,39 @@
 <?php
 
-	//Get, generacion del Token para poder gestionar las Apis
-	add_action( 'rest_api_init', function () {
-	  register_rest_route( 'combo-product/', '/all/', array(
-	    'methods' => WP_REST_Server::READABLE,
-	    'callback' => 'getComboProductAll',
-	  ) );
-	} );
+	if(empty($_GET)){
+		return;
+	}	
+	$action = $_GET["action"];
+	$tipo_superficie = trim(str_replace("'", "", $_GET["tipo_superficie"]));
+	$tipo_acabado = trim(str_replace("'", "", $_GET["tipo_acabado"]));
+	$actividad = trim(str_replace("'", "", $_GET["actividad"]));
 
-	function getComboProductAll(WP_REST_Request $request_data) {
-		// Fetching values from API
-		global $wpdb;
-	    $table_name = $wpdb->prefix . 'calculator_ziel'; 
-		$data = $request_data->get_params();
-	    if(empty($data['tipo_superficie']) || empty($data['tipo_acabado']) || empty($data['actividad'])){
-	        return json_encode('No se encontraron Datos para la busqueda');
-	    }
+	switch ($action) {
+		case 'comboMaterial':
 
+			global $wpdb, $table_prefix;
+			$path = $_SERVER['DOCUMENT_ROOT'];
 
-	    /*
-		$data['password'] = wpbc_encrypt_password($data);	
-		$user = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE email = %s AND password = %s ", $data['email'], $data['password']), ARRAY_A);
-		$hash = password_hash($user[0]['email'], PASSWORD_DEFAULT);
-		$wpdb->update($table_name, 
-		    // Datos que se remplazarán
-		    array( 
-		      'token' => "Beader_".$hash
-		    ),
-		    // Cuando el ID del campo es igual al número 1
-		    array( 'id' => $user[0]['id'] )
-	  	);
-		echo json_encode(array('email'=> $user[0]['email'],'hash'=>$hash));
-		*/
+			if(!isset($wpdb))
+			{
+				include_once $path . '/famouscali/wp-config.php';
+				include_once $path . '/famouscali/wp-load.php';
+				include_once $path . '/famouscali/wp-includes/wp-db.php';
+				include_once $path . '/famouscali/wp-includes/pluggable.php';
+				return;
+			}
+			
+			$table_name = $wpdb->prefix . 'calculator_ziel';
+			$query = "SELECT url_json FROM $table_name WHERE name_option LIKE '".$tipo_superficie.",%".$tipo_acabado.",%".$actividad."';";
+			$result = $wpdb->get_results($query, ARRAY_A);
+
+			echo json_encode($result);
+			
+			break;
+		
+		default:
+			
+			break;
 	}
+	
 ?>
