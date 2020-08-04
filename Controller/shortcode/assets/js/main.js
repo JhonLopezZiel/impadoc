@@ -16,12 +16,25 @@ const App = new Vue({
 		styleObject: "width: 100%; "+
 			"height: 20px; "+
 			"background: #E3E3E3; "+
-			"border-radius: 5px; "
+			"border-radius: 5px;"+
+			"text-align:center; color:#FFFFFF; font-size:15px; font-weight: bold;",
+		styleProgress:0,
 	},
 	//style="width: 100%; "
 	computed:{
 		materialsOptions(){
 			return Object.values(this.comboMaterial);
+		},
+		Progress(){
+			this.styleProgress = 0;
+			for(i in this.form){
+				if(this.form[i] != null){
+					this.styleProgress++;
+				}
+	        }
+			return "width: "+ (20 * this.styleProgress) +"%;"+
+					"background: #0048C6;"+
+					"height: 20px; border-radius: 5px; transition: width 2s ease;";
 		}
 	},
 	methods: {

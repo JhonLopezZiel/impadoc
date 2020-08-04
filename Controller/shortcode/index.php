@@ -40,14 +40,14 @@
         <div class="row pt-0 ">
             <div class="large-12 col">
                 <div id="customer_details">
-                    <div class="clear">
+                    <div  id="app" class="clear">
                         <h4>CALCULADORA</h4>
-                        <div id="app" class="woocommerce-billing-fields">
-                            <div v-bind:style="styleObject">
-                                <div>{{ styleObject }}</div>
-                            </div>
+                        <div v-bind:style="styleObject">{{20 * styleProgress +'%'}}
+                            <div v-bind:style="Progress"></div>
+                        </div>
+                        <div >
                             <div class="woocommerce-billing-fields__field-wrapper">
-                                {{ $data }}    
+                                <!--{{ $data }}-->    
                                 <span v-for="e in errors">{{ e }}</span>
                                 <template v-if="step == 1">
                                     <p class="form-row form-row-wide address-field update_totals_on_change validate-required" 
